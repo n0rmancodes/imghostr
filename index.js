@@ -4,7 +4,7 @@ const parseFormdata = require('parse-formdata');
 const url = require("url");
 const conf = {
     port: 3003,
-    host: "https://images.foreskin.live"
+    host: "https://images.foreskin.live",
     maxSize: 20000000
 }
 startUp();
