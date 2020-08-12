@@ -4,6 +4,7 @@ const parseFormdata = require('parse-formdata');
 const url = require("url");
 const conf = {
     port: 3003,
+    host: "https://images.foreskin.live"
     maxSize: 20000000
 }
 startUp();
@@ -40,13 +41,8 @@ function hostServer(request, response) {
                         return;
                     }
                 }
-                if (request.rawHeaders[c] == "Host") {
-                    var dd = parseInt(c) + 1;
-                    var host = request.rawHeaders[dd];
-                }
             }
         }
-        console.log(request.url)
         parseFormdata(request, function (err, data) {
             if (!err && data.parts[0]) {
                 var id = createId();
@@ -54,7 +50,7 @@ function hostServer(request, response) {
                 var d = fs.createWriteStream("./images/" + id + ".png");
                 data.parts[0].stream.pipe(d);
                 var endData = JSON.stringify({
-                    "file": host + "/" + id
+                    "file": conf.host + "/" + id
                 })
                 response.end(endData);
             } else if (!err) {
