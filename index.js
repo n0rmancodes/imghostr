@@ -78,6 +78,31 @@ function hostServer(request, response) {
                     response.end("welcome to your imghostr server!");
                 }
             })
+        } else if (u.pathname == "/random") {
+            var random = "./images/" + fs.readdirSync("./images")[Math.floor(Math.random()*fs.readdirSync("./images").length)];
+            fs.readFile(random, function(err, resp) {
+                if (!err) {
+                    response.writeHead(200, {
+                        "Access-Control-Allow-Origin":"*",
+                        "Content-Type": "image/png"
+                    })
+                    response.end(resp)
+                } else {
+                    if (err.code == "ENOENT") {
+                        response.writeHead(404, {
+                            "Access-Control-Allow-Origin":"*",
+                            "Content-Type": "text/plain"
+                        })
+                        response.end("404 - image does not exist");
+                    } else {
+                        response.writeHead(501, {
+                            "Access-Control-Allow-Origin":"*",
+                            "Content-Type": "image/png"
+                        })
+                        response.end(err.code);
+                    }
+                }
+           })
         } else {
             fs.readFile("./images" + u.pathname + ".png", function(err, resp) {
                 if (!err) {
