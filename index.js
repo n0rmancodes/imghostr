@@ -3,8 +3,8 @@ const fs = require("fs");
 const parseFormdata = require('parse-formdata');
 const url = require("url");
 const conf = {
-    port: 3000,
-    url: "http://localhost:3000",
+    port: 3003,
+    url: "http://localhost:3003",
     maxSize: 20000000
 }
 startUp();
