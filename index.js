@@ -2,10 +2,12 @@ const http = require("http");
 const fs = require("fs");
 const parseFormdata = require('parse-formdata');
 const url = require("url");
+const cheerio = require("cheerio");
 const conf = {
     port: 3003,
     host: "https://images.foreskin.live",
-    maxSize: 20000000
+    maxSize: 20000000,
+    noHtmlUploads: true
 }
 startUp();
 
@@ -66,6 +68,11 @@ function hostServer(request, response) {
         if (u.pathname == "/" | u.pathname == "/index.html") {
             fs.readFile("./html/index.html", function(err, resp) {
                 if (!err) {
+                    if (conf.noHtmlUploads == true) {
+                        var $ = cheerio.load(resp);
+                        $("#uploader").remove();
+                        var resp = $.html();
+                    }
                     response.writeHead(200, {
                         "Access-Control-Allow-Origin": "*",
                         "Content-Type": "text/html"
