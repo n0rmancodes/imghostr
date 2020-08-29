@@ -46,6 +46,7 @@ function hostServer(request, response) {
         parseFormdata(request, function (err, data) {
             if (!err && data.parts[0]) {
                 var id = createId();
+                if (idExists(id)) {var id = createId();}
                 fs.appendFileSync("./images/" + id + ".png");
                 var d = fs.createWriteStream("./images/" + id + ".png");
                 data.parts[0].stream.pipe(d);
@@ -129,4 +130,12 @@ function hostServer(request, response) {
             })
         }
     }
+}
+
+function idExists(id) {
+    for (var c in fs.readdirSync("./images")) {
+        var p = fs.readdirSync("./images")[c];
+        if (p == id) {return true;} else {continue;}
+    }
+    return false;
 }

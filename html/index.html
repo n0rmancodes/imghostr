@@ -6,5 +6,26 @@
     <body>
         <h1>Welcome to your ImgHostr server.</h1>
         <p>You can edit this HTML file to your liking for your server.</p>
+        <div id="uploader" style="display:none;">
+            <input id="file" type="file" accept=".png">
+            <button onclick="upload()">Upload</button>
+            <p id="prog"></p>
+        </div>
+        <script>
+            document.getElementById("uploader").style.display = "block";
+            function upload() {
+                var xhr = new XMLHttpRequest();
+                var d = new FormData();
+                d.append("file", document.getElementById("file").files[0]);
+                xhr.open("POST", "/upload");
+                document.getElementById("prog").innerHTML = "Uploading...";
+                xhr.send(d);
+                xhr.onload = function () {
+                    var json = JSON.parse(xhr.responseText);
+                    console.log(json.file)
+                    document.getElementById("prog").innerHTML = "<a href='" + json.file.toString() + "'>File</a>";
+                }
+            }
+        </script>
     </body>
 </html>
