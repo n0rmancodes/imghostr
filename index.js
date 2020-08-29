@@ -104,6 +104,22 @@ function hostServer(request, response) {
                     }
                 }
            })
+        } else if (u.pathname == "/generateShareX") {
+            var json = JSON.stringify({
+                "Version": "13.1.0",
+                "DestinationType": "FileUploader",
+                "RequestMethod": "POST",
+                "RequestURL": conf.host + "/upload",
+                "Body": "MultipartFormData",
+                "FileFormName": "d",
+                "URL": "$json:file$"
+            })
+            response.writeHead(200, {
+                "Access-Control-Allow-Origin":"*",
+                "Content-Type": "application/octet-stream",
+                "Content-Disposition": "attachment; filename=sharex.sxcu"
+            })
+            response.end(json);
         } else {
             fs.readFile("./images" + u.pathname + ".png", function(err, resp) {
                 if (!err) {
