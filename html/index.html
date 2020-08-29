@@ -4,10 +4,27 @@
         <title>ImgHostr</title>
     </head>
     <body>
-        <h1>Welcome to your ImgHostr server.</h1>
-        <p>You can edit this HTML file to your liking for your server.</p>
+        <style>
+            body {
+                font-family:Arial;
+            }
+            #host * {
+                margin:0;
+            }
+            #host {
+                margin-bottom:1%;
+            }
+            #uploader input {
+                margin-bottom:0.25%;
+            }
+        </style>
+        <div id="host">
+            <h1>Welcome to your ImgHostr server.</h1>
+            <p>You can edit this HTML file to your liking for your server.</p>
+            <noscript>To upload via HTML, please enable Javascript.</noscript>
+        </div>
         <div id="uploader" style="display:none;">
-            <input id="file" type="file" accept=".png">
+            <input id="file" type="file" accept=".png"><br>
             <button onclick="upload()">Upload</button>
             <p id="prog"></p>
         </div>
