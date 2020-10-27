@@ -320,6 +320,8 @@ function hostServer(request, response) {
                                 for (var c = 0; c < 100; c++) {
                                     result += characters.charAt(Math.floor(Math.random() * characters.length));
                                 }
+                                if (!fs.existsSync("./auth/")) {fs.mkdirSync("./auth/");}
+                                if (!fs.existsSync("./auth/db.json")) {fs.writeFileSync("./auth/db.json");}
                                 if (fs.existsSync("./auth/" + u.query.title.toString() + ".key.txt")) {fs.unlinkSync("./auth/" + u.query.title.toString() + ".key.txt")}
                                 fs.writeFileSync("./auth/" + u.query.title.toString() + ".key.txt" , result);
                                 var json = JSON.parse(fs.readFileSync("./auth/db.json"));
