@@ -4,6 +4,8 @@ This is where you learn to configure your ImgHostr server, using the ``config.js
 ## Quick Notes
 You will need a basic understanding of JSON when editing. If you don't know what you are doing, just follow the steps given to edit.
 
+You must restart the server with every change to the config file.
+
 ## Example Configuration
 ```json
 {
