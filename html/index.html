@@ -17,6 +17,16 @@
             #uploader input {
                 margin-bottom:0.25%;
             }
+            img {
+                width:175px;
+                height:175px;
+                object-fit:cover;
+                transition:width 0.5s, height 0.5s;
+            }
+            img:hover {
+                width:200px;
+                height:200px;
+            }
         </style>
         <div id="host">
             <h1>Welcome to your ImgHostr server.</h1>
@@ -25,23 +35,61 @@
         </div>
         <div id="uploader" style="display:none;">
             <p>If you are having problems uploading, try using <a href="/generateShareX">this ShareX uploader file</a>.</p>
-            <input id="file" type="file" accept=".png"><br>
+            <label for="file">Upload file:</label>
+            <input name="file" id="file" type="file" accept=".png" autocomplete="off"><br>
+            <label id="authCodeLabel" for="auth">Authentication code:</label>
+            <input name="auth" type="password" id="authCode" placeholder="Insert authentication code." style="width:200px;"><br>
             <button onclick="upload()">Upload</button>
             <p id="prog"></p>
         </div>
+        <div id="imgHolderContainer">
+            <h3>Recently Uploaded</h3>
+            <div id="imgHolder"></div>
+        </div>
         <script>
-            document.getElementById("uploader").style.display = "block";
+            if (document.getElementById("uploader")) {
+                document.getElementById("uploader").style.display = "block";   
+            }
+            getImg()
             function upload() {
                 var xhr = new XMLHttpRequest();
                 var d = new FormData();
                 d.append("file", document.getElementById("file").files[0]);
                 xhr.open("POST", "/upload");
+                xhr.setRequestHeader("authentication", document.getElementById("authCode").value);
                 document.getElementById("prog").innerHTML = "Uploading...";
                 xhr.send(d);
                 xhr.onload = function () {
                     var json = JSON.parse(xhr.responseText);
-                    console.log(json.file)
-                    document.getElementById("prog").innerHTML = "<a href='" + json.file.toString() + "'>File</a>";
+                    if (json.file) {
+                        document.getElementById("prog").innerHTML = "<a href='" + json.file.toString() + "'>File</a>";
+                    } else if (json.err.message) {
+                        document.getElementById("prog").innerHTML = "<span style='color:red;'>" + json.err.message + "</span>";
+                    } else if (json.err.code) {
+                        document.getElementById("prog").innerHTML = "<span style='color:red;'>" + json.err.code + "</span>";
+                    } else {
+                        document.getElementById("prog").innerHTML = "<span style='color:red;'>" + json.err + "</span>";
+                    }
+                }
+            }
+            function getImg() {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "/imageLineup");
+                xhr.send();
+                xhr.onload = function() {
+                    var json = JSON.parse(xhr.responseText);
+                    if (!json.err) {
+                        for (var c in json) {
+                            var a = document.createElement("A");
+                            a.href = "/" + json[c].split(".")[0];
+                            var img = document.createElement("IMG");
+                            img.src = "/" + json[c].split(".")[0];
+                            a.appendChild(img);
+                            document.getElementById("imgHolder").appendChild(a);
+                        }
+                    } else {
+                        document.getElementById("imgHolder").innerHTML = "<span style='color:red;'>Could not retrieve latest images due to an error.</span>"
+                    }
                 }
             }
         </script>

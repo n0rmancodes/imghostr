@@ -1,0 +1,11 @@
+{
+    "host": "http://localhost:3003",
+    "maxSize": 20000000,
+    "noHtmlUploads": false,
+    "requireAuth": false,
+    "allowAutoAuth": false,
+    "port": 3003,
+    "displayImages": true,
+    "makeInfoJson": true,
+    "pass":"password"
+}

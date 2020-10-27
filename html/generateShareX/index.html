@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ImgHostr</title>
+    </head>
+    <body>
+        <style>
+            body {
+                font-family:Arial;
+            }
+            body * {
+                margin:0;
+            }
+        </style>
+        <h1>Generate a ShareX file.</h1>
+        <form action="/generateShareX" method="GET">
+            <label for="auth">Authentication Code: </label>
+            <input type="password" id="auth" name="auth" placeholder="Insert auth code.">
+            <input type="submit" value="GET SHAREX FILE">
+        </form>
+        <p>Don't have one? <a href="/generateAuth">Click here</a>.</p>
+    </body>
+</html>

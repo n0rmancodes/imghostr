@@ -1,21 +1,28 @@
 # imghostr
-ImgHostr is a one-dependency ShareX server written in NodeJS.
+ImgHostr is a simple image (made for ShareX) server written in NodeJS.
 
 ## Features
+- Ready to go in just one command (once NodeJs is installed)
+- Easy to setup and install.
+- Customizable homepage.
+- Super easy authentication.
 
-- Dead simple setup
-- Customizable homepage
+## Roadmap
+- Add deletion URLs and thumbnail URLs.
+- Easy JSON API (outside of uploading).
+- Add documentation for ``/utils``.
+- Allow URL based uploading.
 
 ## Installation
 
 ### Requirements
 - NodeJS 10 or above.
-- Port ``3000`` to be open (changeable via ``index.js``).
+- Port ``3003`` to be open (easily changeable).
 
 ### Steps
 
 1. Make sure node is up to date!
 2. Install dependency (via ``npm install``).
-3. (optional) Edit ``conf`` to your liking.
+3. Create ``config.json`` based on what [these settings do](/docs/configuration.md) or leave it alone and have default settings.
 4. Run ``node index``. 
 5. Enjoy!
