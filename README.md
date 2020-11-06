@@ -24,6 +24,6 @@ ImgHostr is a simple image (made for ShareX) server written in NodeJS.
 
 1. Make sure node is up to date!
 2. Install dependency (via ``npm install``).
-3. Create ``config.json`` based on what [these settings do](/docs/configuration.md) or leave it alone and have default settings.
+3. Create ``config.json`` based on what [these settings do](/docs/config/README.md) or leave it alone and have default settings.
 4. Run ``node index``. 
 5. Enjoy!
