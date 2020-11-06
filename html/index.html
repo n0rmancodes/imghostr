@@ -56,7 +56,9 @@
                 var d = new FormData();
                 d.append("file", document.getElementById("file").files[0]);
                 xhr.open("POST", "/upload");
-                xhr.setRequestHeader("authentication", document.getElementById("authCode").value);
+                if (document.getElementById("authCode")) {
+                    xhr.setRequestHeader("authentication", document.getElementById("authCode").value);
+                }
                 document.getElementById("prog").innerHTML = "Uploading...";
                 xhr.send(d);
                 xhr.onload = function () {

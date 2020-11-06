@@ -259,7 +259,15 @@ function hostServer(request, response) {
         } else if (u.pathname == "/imageLineup") {
             if (conf.displayImages == true) {
                 var line = fs.readdirSync("./images");
-                if (conf.makeInfoJson == true) {var line = line.slice(1);}
+                if (conf.makeInfoJson == true) {
+                    console.log();
+                    if (findNum("info", fs.readdirSync("./images")) !== null) {
+                        var k = findNum("info", fs.readdirSync("./images"));
+                        var line = rmNum(k, line);
+                    } else {
+                        var line = line;
+                    }
+                }
                 var l = JSON.stringify(line);
                 response.writeHead(200, {
                     "Access-Control-Allow-Origin": "*",
@@ -420,4 +428,19 @@ function whoIs(key) {
         if (keychain[c].key == key) {return keychain[c].id} else {continue;}
     }
     return null;
+}
+
+function findNum(a, array) {
+    for (var c in array) {
+        if (array[c] == a) {return c;} else {continue;}
+    }
+    return null;
+}
+
+function rmNum(a, b) {
+    var d = [];
+    for (var c in b) {
+        if (c == a) {continue;} else {d.push(b[c]);}
+    }
+    return d;
 }
