@@ -10,7 +10,7 @@ ImgHostr is a simple image (made for ShareX) server written in NodeJS.
 ## Roadmap
 - Add deletion URLs and thumbnail URLs.
 - Easy JSON API (outside of uploading).
-- Add documentation for ``/utils``.
+- ~~Add documentation for ``/utils``.~~ *(Added November 14, 2020)*
 - Allow URL based uploading.
 - Add admin dashboard.
 
