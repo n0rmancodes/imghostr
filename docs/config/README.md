@@ -10,7 +10,7 @@ You must restart the server with every change to the config file.
 ```json
 {
     "host": "http://localhost:3003",
-    "maxSize": 20000000,
+    "maxSize": 10000000,
     "noHtmlUploads": false,
     "requireAuth": false,
     "allowAutoAuth": false,
@@ -34,9 +34,9 @@ Default: ``"localhost:3003"``
 ## Max Size (``maxSize``)
 This is a number that tells the maximum size of individual images can be. This must be in *byte* form. Do not put quotes around it.
 
-For example, if you want the maximum size of bytes to be 20 MB images to be uploaded, set ``maxSize`` in the JSON file to ``20000000``. Don't put in commas.
+For example, if you want the maximum size of bytes to be 20 MB images to be uploaded, set ``maxSize`` in the JSON file to ``10000000``. Don't put in commas.
 
-Default: ``20000000``.
+Default: ``10000000``.
 
 ## No HTML Uploads (``noHtmlUploads``)
 This is a true/false statement. Do not put quotes around it. This tells the server to allow or not allow uploads through the HTML website on it.

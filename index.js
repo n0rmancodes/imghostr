@@ -57,12 +57,26 @@ function hostServer(request, response) {
         parseFormdata(request, function (err, data) {
             if (!err && data.parts[0]) {
                 var id = createId();
+                if (data.parts[0].mimetype == "image/jpeg") {var type = ".jpg";}
+                else if (data.parts[0].mimetype == "image/png") {var type = ".png";}
+                else if (data.parts[0].mimetype == "image/gif") {var type = ".gif";}
+                else {
+                    var err = {
+                        "err": {
+                            "code": "unsupportedFile",
+                            "message": "Invalid file type to upload."
+                        }
+                    };
+                    response.writeHead(403, {
+                        "Access-Control-Allow-Origin": "*",
+                        "Content-Type": "application/json"
+                    });
+                    response.end(err);
+                }
                 if (idExists(id)) {var id = createId();}
                 if (conf.requireAuth == true) {
                     if (request.headers["authentication"]) {
-                        if (isProperKey(request.headers["authentication"]) == true) {
-
-                        } else {
+                        if (!isProperKey(request.headers["authentication"]) == true) {
                             var err = {
                                 "err": {
                                     "message": "Invalid auth key used.",
@@ -260,7 +274,6 @@ function hostServer(request, response) {
             if (conf.displayImages == true) {
                 var line = fs.readdirSync("./images");
                 if (conf.makeInfoJson == true) {
-                    console.log();
                     if (findNum("info", fs.readdirSync("./images")) !== null) {
                         var k = findNum("info", fs.readdirSync("./images"));
                         var line = rmNum(k, line);
@@ -379,29 +392,85 @@ function hostServer(request, response) {
                 }
             }
         } else {
-            fs.readFile("./images" + u.pathname + ".png", function(err, resp) {
-                if (!err) {
-                    response.writeHead(200, {
-                        "Access-Control-Allow-Origin":"*",
-                        "Content-Type": "image/png"
-                    })
-                    response.end(resp)
-                } else {
-                    if (err.code == "ENOENT") {
-                        response.writeHead(404, {
+            if (fs.existsSync("./images" + u.pathname + ".jpg")) {
+                fs.readFile("./images" + u.pathname + ".jpg", function(err, resp) {
+                    if (!err) {
+                        response.writeHead(200, {
                             "Access-Control-Allow-Origin":"*",
-                            "Content-Type": "text/plain"
+                            "Content-Type": "image/jpeg"
                         })
-                        response.end("404 - image does not exist");
+                        response.end(resp)
                     } else {
-                        response.writeHead(501, {
+                        if (err.code == "ENOENT") {
+                            response.writeHead(404, {
+                                "Access-Control-Allow-Origin":"*",
+                                "Content-Type": "text/plain"
+                            })
+                            response.end("404 - image does not exist");
+                        } else {
+                            response.writeHead(501, {
+                                "Access-Control-Allow-Origin":"*",
+                                "Content-Type": "text/plain"
+                            })
+                            response.end(err.code);
+                        }
+                    }
+                })
+            } else if (fs.existsSync("./images" + u.pathname + ".gif")) {
+                fs.readFile("./images" + u.pathname + ".gif", function(err, resp) {
+                    if (!err) {
+                        response.writeHead(200, {
+                            "Access-Control-Allow-Origin":"*",
+                            "Content-Type": "image/gif"
+                        })
+                        response.end(resp)
+                    } else {
+                        if (err.code == "ENOENT") {
+                            response.writeHead(404, {
+                                "Access-Control-Allow-Origin":"*",
+                                "Content-Type": "text/plain"
+                            })
+                            response.end("404 - image does not exist");
+                        } else {
+                            response.writeHead(501, {
+                                "Access-Control-Allow-Origin":"*",
+                                "Content-Type": "text/plain"
+                            })
+                            response.end(err.code);
+                        }
+                    }
+                })
+            } else if (fs.existsSync("./images" + u.pathname + ".png")) {
+                fs.readFile("./images" + u.pathname + ".png", function(err, resp) {
+                    if (!err) {
+                        response.writeHead(200, {
                             "Access-Control-Allow-Origin":"*",
                             "Content-Type": "image/png"
                         })
-                        response.end(err.code);
+                        response.end(resp)
+                    } else {
+                        if (err.code == "ENOENT") {
+                            response.writeHead(404, {
+                                "Access-Control-Allow-Origin":"*",
+                                "Content-Type": "text/plain"
+                            })
+                            response.end("404 - image does not exist");
+                        } else {
+                            response.writeHead(501, {
+                                "Access-Control-Allow-Origin":"*",
+                                "Content-Type": "text/plain"
+                            })
+                            response.end(err.code);
+                        }
                     }
-                }
-            })
+                })
+            } else {
+                response.writeHead(404, {
+                    "Access-Control-Allow-Origin":"*",
+                    "Content-Type": "text/plain"
+                })
+                response.end("404 - image does not exist");
+            }
         }
     }
 }
