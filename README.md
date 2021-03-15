@@ -1,3 +1,6 @@
+# ALERT
+This project has been remade from the ground up [here](https://github.com/open-sharex-server).
+
 # imghostr
 ImgHostr is a simple image (made for ShareX) server written in NodeJS.
 
